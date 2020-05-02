@@ -2,7 +2,7 @@ import { isEqual } from 'date-fns';
 import Appointments from '../models/Appointments';
 
 interface AppointmentDTO {
-    provider: string;
+    provider_id: string;
     date: Date;
 }
 
@@ -27,8 +27,8 @@ class AppointmentsRepository {
     }
 
     // Metódo que cria um novo Appointment
-    public create({ provider, date }: AppointmentDTO): Appointments {
-        const appointment = new Appointments({ provider, date });
+    public create({ provider_id, date }: AppointmentDTO): Appointments {
+        const appointment = new Appointments({ provider_id, date });
 
         this.appointments.push(appointment);
 

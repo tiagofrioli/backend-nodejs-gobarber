@@ -3,7 +3,7 @@ import Appointments from '../models/Appointments';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 interface RequestDTO {
-    provider: string;
+    provider_id: string;
     date: Date;
 }
 
@@ -15,7 +15,7 @@ class CreateAppointmentService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public execute({ provider, date }: RequestDTO): Appointments {
+    public execute({ provider_id, date }: RequestDTO): Appointments {
         const appointmentDate = startOfHour(date);
 
         const findInSameDate = this.appointmentRepository.findByDate(
@@ -27,7 +27,7 @@ class CreateAppointmentService {
         }
 
         const appointment = this.appointmentRepository.create({
-            provider,
+            provider_id,
             date: appointmentDate,
         });
 
