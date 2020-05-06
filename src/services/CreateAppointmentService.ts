@@ -1,6 +1,7 @@
 import { startOfHour } from 'date-fns';
 import Appointments from '../models/Appointments';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
     provider_id: string;
@@ -23,7 +24,7 @@ class CreateAppointmentService {
         );
 
         if (findInSameDate) {
-            throw Error('This appointment is booked !');
+            throw new AppError('This appointment is booked !');
         }
 
         const appointment = this.appointmentRepository.create({

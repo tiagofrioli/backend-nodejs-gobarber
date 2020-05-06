@@ -3,6 +3,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import auth from '../config/auth';
 import Users from '../models/Users';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
     email: string;
@@ -19,7 +20,7 @@ class CreateSessionService {
         const user = await usersRepository.findOne({ where: { email } });
 
         if (!user) {
-            throw new Error('Incorrect email/password combination');
+            throw new AppError('Incorrect email/password combination', 401);
         }
 
         // user.password = senha criptografada
@@ -29,7 +30,7 @@ class CreateSessionService {
         const passwordMatched = await compare(password, user.password);
 
         if (!passwordMatched) {
-            throw new Error('Incorrect email/password combination');
+            throw new AppError('Incorrect email/password combination', 401);
         }
 
         const { secret, expiresIn } = auth.jwt;
