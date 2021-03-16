@@ -35,7 +35,9 @@
           "camelcase":"off",
           "no-useless-constructor":"off",
           "no-empty-function":"off",
-          "class-methods-use-this":"off"
+          "class-methods-use-this":"off",
+          "@typescript-eslint/no-var-requires": 0,
+          "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
     },
     "settings": {
         "import/resolver": {

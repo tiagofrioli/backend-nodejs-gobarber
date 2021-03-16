@@ -10,7 +10,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
         this.ormRepository = getRepository(Appointments);
     }
     // Metódo que verifica se duas datas de Appointment são iguais
-    // eslint-disable-next-line lines-between-class-members
+
     public async findByDate(date: Date): Promise<Appointments | undefined> {
         const findAppointment = await this.ormRepository.findOne({
             where: { date },
@@ -18,7 +18,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
         return findAppointment;
     }
 
-    // eslint-disable-next-line prettier/prettier
+
     public async create({provider_id, date}: ICreateAppointmentDTO): Promise<Appointments>{
         const appointment = this.ormRepository.create({ provider_id, date });
 
