@@ -1,45 +1,49 @@
+import { uuid } from "uuidv4";
+import IUsersRepository from "../IUsersRepository";
+import ICreateUserDTO from "@modules/users/dtos/ICreateUserDTO";
+import User from "../../infra/typeorm/entities/Users";
 
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
-import User from '../../infra/typeorm/entities/Users';
-import { uuid } from 'uuidv4';
-
-class UsersRepository implements IUsersRepository {
-
+class FakeUsersRepository implements IUsersRepository {
  private users: User[] = [];
-  
-    public async findById(id: string): Promise<User | undefined> {
-        const findUser = this.users.find(user => user.id === id);
 
-        return findUser;
-    }
+ public async findById(id: string): Promise<User | undefined> {
+   const findUser = this.users.find(user => user.id === id);
 
-    public async findByEmail(email: string): Promise<User | undefined> {
-        const findUser = this.users.find(user => user.email === email);
+   return findUser;
+ }
 
-        return findUser;
-    }
+ public async findByEmail(email: string): Promise<User | undefined> {
+   const findUser = this.users.find(user => user.email === email);
 
-    public async create(userData: ICreateUserDTO): Promise<User> {
+   return findUser;
+ }
 
-     const user = new User();
-     Object.assign(user, {id: uuid()}, userData);
 
-     this.users.push(user);
+ public async create(userData: ICreateUserDTO): Promise<User> {
+   const user = new User();
 
-     return user;
-     
-    }
+   Object.assign(
+     user,
+     {
+       id: uuid(),
+     },
+     userData,
+   );
 
-    public async save(user: User): Promise<User> {
+   this.users.push(user);
 
-     const findIndex = this.users.findIndex(findUser => findUser.id === user.id)
+   return user;
+ }
 
-     this.users[findIndex] = user;
+ public async save(user: User): Promise<User> {
+   const userIndex = this.users.findIndex(
+     findIndex => findIndex.id === user.id,
+   );
 
-     return user;
-      
-    }
+   this.users[userIndex] = user;
+
+   return user;
+ }
 }
 
-export default UsersRepository;
+export default FakeUsersRepository;
